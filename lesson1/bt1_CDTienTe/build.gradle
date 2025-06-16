@@ -1,0 +1,34 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group 'com'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.10.2'
+}
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+// Spring MVC
+    implementation 'org.springframework:spring-webmvc:5.3.23'
+// Thymeleaf
+    implementation 'org.thymeleaf:thymeleaf-spring5:3.0.15.RELEASE'
+// Servlet API
+    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+}
+test {
+    useJUnitPlatform()
+}
