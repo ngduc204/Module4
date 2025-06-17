@@ -1,4 +1,4 @@
-package com.bt2_tudien;
+package com.emailvalidatemaven;
 
 import java.io.*;
 import javax.servlet.http.*;
