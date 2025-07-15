@@ -1,10 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <title>Thêm sản phẩm</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-$END$
+<h1>Thêm sản phẩm mới</h1>
+<form th:action="@{/products/add}" th:object="${product}" method="post">
+    <div>
+        <label>Tên sản phẩm:</label>
+        <input type="text" th:field="*{name}" />
+        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+    </div>
+    <div>
+        <label>Giá:</label>
+        <input type="number" th:field="*{price}" />
+        <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
+    </div>
+    <div>
+        <label>Loại sản phẩm:</label>
+        <select th:field="*{category}">
+            <option value="">Chọn loại</option>
+            <option th:each="cat : ${categories}" th:value="${cat.cid}" th:text="${cat.name}"></option>
+        </select>
+    </div>
+    <button type="submit">Thêm sản phẩm</button>
+</form>
 </body>
 </html>

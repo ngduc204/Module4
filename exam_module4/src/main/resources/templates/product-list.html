@@ -1,10 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <title>Danh sách sản phẩm</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-$END$
+<h1>Danh sách sản phẩm</h1>
+<form th:action="@{/products}" method="get">
+    <input type="text" name="keyword" placeholder="Tìm theo tên" th:value="${keyword}">
+    <select name="category">
+        <option value="">Tất cả loại</option>
+        <option th:each="cat : ${categories}" th:value="${cat.name}" th:text="${cat.name}"></option>
+    </select>
+    <input type="number" name="minPrice" placeholder="Giá từ" th:value="${minPrice}">
+    <input type="number" name="maxPrice" placeholder="Giá đến" th:value="${maxPrice}">
+    <button type="submit">Tìm kiếm</button>
+</form>
+<table>
+    <tr>
+        <th>Tên</th>
+        <th>Giá</th>
+        <th>Loại</th>
+        <th>Hành động</th>
+    </tr>
+    <tr th:each="product : ${products}">
+        <td th:text="${product.name}"></td>
+        <td th:text="${product.price}"></td>
+        <td th:text="${product.category.name}"></td>
+        <td>
+            <a th:href="@{/products/delete/{id}(id=${product.id})}" onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa</a>
+        </td>
+    </tr>
+</table>
+<div>
+    <a th:href="@{/products?page=1}">Đầu</a>
+    <a th:href="@{/products?page=${currentPage - 1}}" th:unless="${currentPage == 1}">Trước</a>
+    <span>Trang [[${currentPage}]] / [[${totalPages}]]</span>
+    <a th:href="@{/products?page=${currentPage + 1}}" th:unless="${currentPage == totalPages}">Sau</a>
+    <a th:href="@{/products?page=${totalPages}}">Cuối</a>
+</div>
+<a th:href="@{/products/add}">Thêm sản phẩm</a>
 </body>
 </html>
