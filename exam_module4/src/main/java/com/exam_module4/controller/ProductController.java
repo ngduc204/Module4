@@ -66,4 +66,26 @@ public class ProductController {
         productService.deleteProduct(id);
         return "redirect:/products";
     }
+
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable Integer id, Model model) {
+        Product product = productService.getProductById(id).orElse(null);
+        if (product == null) {
+            return "redirect:/products";
+        }
+        model.addAttribute("product", product);
+        model.addAttribute("categories", categoryService.getAllCategories());
+        return "product-edit";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String updateProduct(@PathVariable Integer id, @Valid @ModelAttribute("product") Product product, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("categories", categoryService.getAllCategories());
+            return "product-edit";
+        }
+        product.setId(id);
+        productService.saveProduct(product);
+        return "redirect:/products";
+    }
 }

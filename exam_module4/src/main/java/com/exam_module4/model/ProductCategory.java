@@ -16,7 +16,6 @@ public class ProductCategory {
     @OneToMany(mappedBy = "category")
     private List<Product> products;
 
-    // Getters and Setters
     public Integer getCid() { return cid; }
     public void setCid(Integer cid) { this.cid = cid; }
     public String getName() { return name; }
